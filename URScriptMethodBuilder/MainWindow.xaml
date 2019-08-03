@@ -21,7 +21,8 @@
 			<StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"
 				Orientation="Horizontal">
 				<Button Content="Load" Width="60" Click="Load_Clicked"/>
-				<Button Content="Save" Width="60" Margin="5,0,0,0" Click="Save_Clicked"/>
+				<Button Content="Save" Width="60" Margin="5,0,0,0" Click="Save_Clicked"
+					IsEnabled="{Binding HasItem}"/>
 			</StackPanel>
 			<StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0"
 				Orientation="Horizontal">

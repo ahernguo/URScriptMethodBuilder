@@ -18,6 +18,8 @@ namespace URScriptMethodBuilder {
 		public WpfObservableCollection<IMethod> Methods { get; }
 		/// <summary>取得或設定當前 <see cref="ListBox"/> 所選取的項目</summary>
 		public IMethod SelectedMethod { get; set; }
+		/// <summary>取得當前是否有函數於 <see cref="Methods"/> 中</summary>
+		public bool HasItem => Methods.Count > 0;
 		#endregion
 
 		#region Constructor
@@ -68,6 +70,8 @@ namespace URScriptMethodBuilder {
 					MessageBoxButton.OK,
 					MessageBoxImage.Error
 				);
+			} finally {
+				RaisePropChg("HasItem");
 			}
 		}
 
@@ -113,6 +117,8 @@ namespace URScriptMethodBuilder {
 					MessageBoxButton.OK,
 					MessageBoxImage.Error
 				);
+			} finally {
+				RaisePropChg("HasItem");
 			}
 		}
 
@@ -147,6 +153,8 @@ namespace URScriptMethodBuilder {
 					MessageBoxButton.OK,
 					MessageBoxImage.Error
 				);
+			} finally {
+				RaisePropChg("HasItem");
 			}
 		}
 		#endregion
