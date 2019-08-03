@@ -30,7 +30,7 @@
 				<Button Content="Delete" Width="60" Margin="5,0,0,0" Click="Delete_Clicked"/>
 			</StackPanel>
 		</Grid>
-		<ListBox Grid.Row="1" Name="lbMthd" Margin="0,0,0,0" SelectionMode="Single"
+		<ListBox Grid.Row="1" Name="lbMthd" Margin="2,2,2,2" SelectionMode="Single" FontSize="14"
 			ItemsSource="{Binding Methods}" SelectedItem="{Binding SelectedMethod}">
 			<ListBox.ContextMenu>
 				<ContextMenu>

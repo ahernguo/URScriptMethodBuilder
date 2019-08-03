@@ -24,10 +24,10 @@
 		<TextBlock Grid.Row="1" Grid.Column="0" Text="Comment"
 			VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0"/>
 		<TextBox Grid.Row="0" Grid.Column="1" Margin="5,5,5,5"
-			Text="{Binding Parameter.Label, Mode=TwoWay}"/>
+			FontSize="14" Text="{Binding Parameter.Label, Mode=TwoWay}"/>
 		<TextBox Grid.Row="1" Grid.Column="1" Margin="5,5,5,5"
 			TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-			Text="{Binding Parameter.Comment, Mode=TwoWay}"/>
+			FontSize="14" Text="{Binding Parameter.Comment, Mode=TwoWay}"/>
 		<StackPanel Grid.Row="2" Grid.Column="1" Margin="0,0,5,0" Orientation="Horizontal"
 			VerticalAlignment="Center" HorizontalAlignment="Right">
 			<Button Content="Save" Width="60" Click="Save_Clicked"/>

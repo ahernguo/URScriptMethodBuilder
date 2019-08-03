@@ -38,16 +38,16 @@
 			<Button Content="Exit" Width="60" Margin="15,0,0,0" Click="Exit_Clicked"/>
 		</StackPanel>
 		<TextBox Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto"
-			Text="{Binding Method.Name, Mode=TwoWay}"/>
+			FontSize="14" Text="{Binding Method.Name, Mode=TwoWay}"/>
 		<TextBox Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" VerticalScrollBarVisibility="Auto"
 			TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-			Text="{Binding Method.Comment, Mode=TwoWay}"/>
+			FontSize="14" Text="{Binding Method.Comment, Mode=TwoWay}"/>
 		<TextBox Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" VerticalScrollBarVisibility="Auto"
 			TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-			Text="{Binding Method.Signature.Return, Mode=TwoWay}"/>
+			FontSize="14" Text="{Binding Method.Signature.Return, Mode=TwoWay}"/>
 		<TextBox Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" VerticalScrollBarVisibility="Auto"
 			TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-			Text="{Binding Method.Signature.Deprecated, Mode=TwoWay}"/>
+			FontSize="14" Text="{Binding Method.Signature.Deprecated, Mode=TwoWay}"/>
 		<Grid Grid.Row="1" Grid.Column="1" Margin="5,5,5,5">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
@@ -58,7 +58,7 @@
 				<Button Content="-" Click="Delete_Clicked"/>
 			</StackPanel>
 			<DataGrid Grid.Column="0" Margin="0,0,2.5,0" Name="dgPara" AutoGenerateColumns="False"
-				BorderBrush="WhiteSmoke" BorderThickness="1"
+				BorderBrush="WhiteSmoke" BorderThickness="1" FontSize="14"
 				IsReadOnly="True" ItemsSource="{Binding Method.Signature.Parameters}"
 				SelectionMode="Single" SelectedItem="{Binding SelectedParameter}">
 				<DataGrid.Columns>
