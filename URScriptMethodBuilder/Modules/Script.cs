@@ -19,6 +19,12 @@ namespace URScriptMethodBuilder {
 		bool IsValid { get; }
 		#endregion
 
+		#region Methods
+		/// <summary>取得此 <see cref="IParameter"/> 的複製品</summary>
+		/// <returns>複製品</returns>
+		IParameter Clone();
+		#endregion
+
 	}
 
 	/// <summary>函數簽章</summary>
@@ -63,6 +69,10 @@ namespace URScriptMethodBuilder {
 		/// <summary>取得此 <see cref="IMethod"/> 的複製品</summary>
 		/// <returns>複製品</returns>
 		IMethod Clone();
+		/// <summary>將 <see cref="IParameter"/> 取代為指定的資料</summary>
+		/// <param name="src">欲被取代的 <see cref="IParameter"/></param>
+		/// <param name="tar">欲取代的新 <see cref="IParameter"/></param>
+		void ReplaceParameter(IParameter src, IParameter tar);
 		#endregion
 
 	}
@@ -82,6 +92,16 @@ namespace URScriptMethodBuilder {
 		public bool IsValid => !string.IsNullOrEmpty(Label) && !string.IsNullOrEmpty(Comment);
 		#endregion
 
+		#region Public Operations
+		/// <summary>取得此 <see cref="IParameter"/> 的複製品</summary>
+		/// <returns>複製品</returns>
+		public IParameter Clone() {
+			return new UrParameter() {
+				Label = this.Label,
+				Comment = this.Comment
+			};
+		}
+		#endregion
 	}
 
 	/// <summary>URScript 函數簽章</summary>
@@ -173,6 +193,18 @@ namespace URScriptMethodBuilder {
 			var jsonStr = JsonConvert.SerializeObject(this);
 			//反序列化並回傳之
 			return JsonConvert.DeserializeObject<UrMethod>(jsonStr);
+		}
+
+		/// <summary>將 <see cref="IParameter"/> 取代為指定的資料</summary>
+		/// <param name="src">欲被取代的 <see cref="IParameter"/></param>
+		/// <param name="tar">欲取代的新 <see cref="IParameter"/></param>
+		public void ReplaceParameter(IParameter src, IParameter tar) {
+			//先記錄舊的位置
+			var idx = Signature.Parameters.IndexOf(src);
+			//移除舊的資料
+			Signature.Parameters.Remove(src);
+			//在原位插入資料
+			Signature.Parameters.Insert(idx, tar);
 		}
 		#endregion
 
