@@ -60,6 +60,9 @@ namespace URScriptMethodBuilder {
 		bool RemoveParameter(IParameter parameter);
 		/// <summary>更新函數簽章</summary>
 		void UpdateSignature();
+		/// <summary>取得此 <see cref="IMethod"/> 的複製品</summary>
+		/// <returns>複製品</returns>
+		IMethod Clone();
 		#endregion
 
 	}
@@ -92,7 +95,7 @@ namespace URScriptMethodBuilder {
 		/// <summary>取得或設定已被取代的 Markdown 字串</summary>
 		public string Deprecated { get; set; }
 		/// <summary>取得此函數對應的參數集合</summary>
-		[JsonConverter(typeof(UrConverter<WpfObservableCollection<UrParameter>>))]
+		[JsonConverter(typeof(UrParametersConverter))]
 		public WpfObservableCollection<IParameter> Parameters { get; }
 		#endregion
 
@@ -115,7 +118,7 @@ namespace URScriptMethodBuilder {
 		[JsonIgnore]
 		public bool IsValid => !string.IsNullOrEmpty(Name);
 		/// <summary>取得或設定函數簽章</summary>
-		[JsonConverter(typeof(UrConverter<UrSignature>))]
+		[JsonConverter(typeof(UrSignatureConverter))]
 		public ISignature Signature { get; }
 		#endregion
 
@@ -162,6 +165,15 @@ namespace URScriptMethodBuilder {
 			//Assign
 			Signature.Label = sb.ToString();
 		}
+
+		/// <summary>取得此 <see cref="IMethod"/> 的複製品</summary>
+		/// <returns>複製品</returns>
+		public IMethod Clone() {
+			//採用 JSON 序列化
+			var jsonStr = JsonConvert.SerializeObject(this);
+			//反序列化並回傳之
+			return JsonConvert.DeserializeObject<UrMethod>(jsonStr);
+		}
 		#endregion
 
 		#region Overides
@@ -176,24 +188,53 @@ namespace URScriptMethodBuilder {
 	#endregion
 
 	#region JSON Converter
-	/// <summary>提供 URScript 各項類別之轉換器</summary>
-	/// <typeparam name="T">IMethod, ISignature, IParameter</typeparam>
-	public class UrConverter<T> : JsonConverter {
+	/// <summary>提供 WpfObservableCollection&lt;<see cref="IParameter"/>&gt; 的 JSON 轉換功能</summary>
+	/// <remarks>先反序列化成 IList&lt;UrParameter&gt; 再塞入目標集合！ 避免型別失敗~ </remarks>
+	public class UrParametersConverter : JsonConverter<WpfObservableCollection<IParameter>> {
 
-		#region Overrides
-		public override bool CanConvert(Type objectType) {
-			return true;
+		public override WpfObservableCollection<IParameter> ReadJson(JsonReader reader, Type objectType, WpfObservableCollection<IParameter> existingValue, bool hasExistingValue, JsonSerializer serializer) {
+			//檢查是否已有 WpfObservableCollection<IParameter>，沒有則 new 一個。  理論上都會有才對...
+			var result = hasExistingValue ? existingValue : new WpfObservableCollection<IParameter>();
+			//因不能反序列化成 IParameter，故直接反成 UrParameter
+			var obj = serializer.Deserialize<IList<UrParameter>>(reader);
+			//如果反成功，加入集合。 因若直接 WpfObservableCollection<UrParameter> 塞入 WpfObservableCollection<IParameter> 會跳 IParameter 無法等同 UrParameter 的型別錯誤!!
+			if (obj != null) {
+				foreach (var item in obj) {
+					result.Add(item);
+				}
+			}
+			return result;
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
-			return serializer.Deserialize<T>(reader);
-		}
-
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
+		public override void WriteJson(JsonWriter writer, WpfObservableCollection<IParameter> value, JsonSerializer serializer) {
 			serializer.Serialize(writer, value);
 		}
-		#endregion
+	}
 
+	/// <summary>提供適用於 <see cref="UrSignature"/> 的 <see cref="ISignature"/> JSON 轉換功能</summary>
+	/// <remarks>先反序列化成 UrSignature 再回傳 ISignature! 避免型別失敗~ </remarks>
+	public class UrSignatureConverter : JsonConverter<ISignature> {
+
+		public override ISignature ReadJson(JsonReader reader, Type objectType, ISignature existingValue, bool hasExistingValue, JsonSerializer serializer) {
+			//檢查是否已有 ISignature，沒有則 new 一個。  理論上都會有才對...
+			var result = hasExistingValue ? existingValue : new UrSignature();
+			//因不能反序列化成 ISignature，故直接反成 UrSignature
+			var obj = serializer.Deserialize<UrSignature>(reader);
+			//如果反成功，寫入資料。 因 IMethod 的 Signature 是唯讀，為了不想再開放 set 來破壞其權限，故這邊直接手動更新之!!
+			if (obj != null) {
+				result.Deprecated = obj.Deprecated;
+				result.Label = obj.Label;
+				result.Return = obj.Return;
+				foreach (var item in obj.Parameters) {
+					result.Parameters.Add(item);
+				}
+			}
+			return result;
+		}
+
+		public override void WriteJson(JsonWriter writer, ISignature value, JsonSerializer serializer) {
+			serializer.Serialize(writer, value);
+		}
 	}
 	#endregion
 }
