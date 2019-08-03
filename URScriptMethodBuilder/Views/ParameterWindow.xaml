@@ -19,15 +19,12 @@
 			<ColumnDefinition Width="70"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
-		<TextBlock Grid.Row="0" Grid.Column="0" Text="Label"
-			VerticalAlignment="Center" HorizontalAlignment="Center"/>
-		<TextBlock Grid.Row="1" Grid.Column="0" Text="Comment"
-			VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0"/>
-		<TextBox Grid.Row="0" Grid.Column="1" Margin="5,5,5,5"
-			FontSize="14" Text="{Binding Parameter.Label, Mode=TwoWay}"/>
-		<TextBox Grid.Row="1" Grid.Column="1" Margin="5,5,5,5"
-			TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-			FontSize="14" Text="{Binding Parameter.Comment, Mode=TwoWay}"/>
+		<TextBlock Grid.Row="0" Grid.Column="0" Text="Label" Style="{StaticResource IndentTitle}"/>
+		<TextBlock Grid.Row="1" Grid.Column="0" Text="Comment" Style="{StaticResource IndentTitle}"/>
+		<TextBox Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource LabelBox}"
+			Text="{Binding Parameter.Label, Mode=TwoWay}"/>
+		<TextBox Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource EditBox}"
+			Text="{Binding Parameter.Comment, Mode=TwoWay}"/>
 		<StackPanel Grid.Row="2" Grid.Column="1" Margin="0,0,5,0" Orientation="Horizontal"
 			VerticalAlignment="Center" HorizontalAlignment="Right">
 			<Button Content="Save" Width="60" Click="Save_Clicked"/>

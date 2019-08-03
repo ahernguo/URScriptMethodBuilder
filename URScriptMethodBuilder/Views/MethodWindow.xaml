@@ -13,7 +13,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="35"/>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="60"/>
+			<RowDefinition Height="100"/>
 			<RowDefinition Height="60"/>
 			<RowDefinition Height="60"/>
 			<RowDefinition Height="35"/>
@@ -22,32 +22,24 @@
 			<ColumnDefinition Width="70"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
-		<TextBlock Grid.Row="0" Grid.Column="0" Text="Name"
-			VerticalAlignment="Top" HorizontalAlignment="Center"/>
-		<TextBlock Grid.Row="1" Grid.Column="0" Text="Parameters" Margin="0,5,0,0"
-			VerticalAlignment="Top" HorizontalAlignment="Center"/>
-		<TextBlock Grid.Row="2" Grid.Column="0" Text="Comment"
-			VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0"/>
-		<TextBlock Grid.Row="3" Grid.Column="0" Text="Return"
-			VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0"/>
-		<TextBlock Grid.Row="4" Grid.Column="0" Text="Deprecated"
-			VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+		<TextBlock Grid.Row="0" Grid.Column="0" Text="Name" Style="{StaticResource Title}"/>
+		<TextBlock Grid.Row="1" Grid.Column="0" Text="Parameters" Style="{StaticResource IndentTitle}"/>
+		<TextBlock Grid.Row="2" Grid.Column="0" Text="Comment" Style="{StaticResource IndentTitle}"/>
+		<TextBlock Grid.Row="3" Grid.Column="0" Text="Return" Style="{StaticResource IndentTitle}"/>
+		<TextBlock Grid.Row="4" Grid.Column="0" Text="Deprecated" Style="{StaticResource IndentTitle}"/>
 		<StackPanel Grid.Row="5" Grid.Column="1" Margin="0,0,5,0" Orientation="Horizontal"
 			VerticalAlignment="Center" HorizontalAlignment="Right">
 			<Button Content="Save" Width="60" Click="Save_Clicked"/>
 			<Button Content="Exit" Width="60" Margin="15,0,0,0" Click="Exit_Clicked"/>
 		</StackPanel>
-		<TextBox Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto"
-			FontSize="14" Text="{Binding Method.Name, Mode=TwoWay}"/>
-		<TextBox Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" VerticalScrollBarVisibility="Auto"
-			TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-			FontSize="14" Text="{Binding Method.Comment, Mode=TwoWay}"/>
-		<TextBox Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" VerticalScrollBarVisibility="Auto"
-			TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-			FontSize="14" Text="{Binding Method.Signature.Return, Mode=TwoWay}"/>
-		<TextBox Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" VerticalScrollBarVisibility="Auto"
-			TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
-			FontSize="14" Text="{Binding Method.Signature.Deprecated, Mode=TwoWay}"/>
+		<TextBox Grid.Row="0" Grid.Column="1" Margin="5,0,5,5" Style="{StaticResource LabelBox}"
+			Text="{Binding Method.Name, Mode=TwoWay}"/>
+		<TextBox Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource EditBox}"
+			Text="{Binding Method.Comment, Mode=TwoWay}"/>
+		<TextBox Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource EditBox}"
+			Text="{Binding Method.Signature.Return, Mode=TwoWay}"/>
+		<TextBox Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource EditBox}"
+			Text="{Binding Method.Signature.Deprecated, Mode=TwoWay}"/>
 		<Grid Grid.Row="1" Grid.Column="1" Margin="5,5,5,5">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
