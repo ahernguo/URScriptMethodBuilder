@@ -67,6 +67,11 @@
 					<DataGridTextColumn Header="Comment" Width="*"
 						Binding="{Binding Comment}"/>
 				</DataGrid.Columns>
+				<DataGrid.ContextMenu>
+					<ContextMenu>
+						<MenuItem Header="View and Modify" Click="Modify_Clicked"/>
+					</ContextMenu>
+				</DataGrid.ContextMenu>
 			</DataGrid>
 		</Grid>
 	</Grid>

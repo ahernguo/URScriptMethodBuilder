@@ -31,6 +31,12 @@
 			</StackPanel>
 		</Grid>
 		<ListBox Grid.Row="1" Name="lbMthd" Margin="0,0,0,0" SelectionMode="Single"
-			ItemsSource="{Binding Methods}" SelectedItem="{Binding SelectedMethod}" />
+			ItemsSource="{Binding Methods}" SelectedItem="{Binding SelectedMethod}">
+			<ListBox.ContextMenu>
+				<ContextMenu>
+					<MenuItem Header="View and Modify" Click="Modify_Clicked"/>
+				</ContextMenu>
+			</ListBox.ContextMenu>
+		</ListBox>
 	</Grid>
 </mahapps.ctrl:MetroWindow>

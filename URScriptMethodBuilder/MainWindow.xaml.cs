@@ -54,13 +54,28 @@ namespace URScriptMethodBuilder {
 					//先把檔案內的資料讀出來
 					var jsonStr = File.ReadAllText(diag.FileName);
 					//JSON 反序列化
-					var mthds = JsonConvert.DeserializeObject<IEnumerable<UrMethod>>(jsonStr);
+					var mthds = JsonConvert.DeserializeObject<IList<UrMethod>>(jsonStr);
 					//如果有成功反出東西，則更新集合
 					if (mthds != null) {
 						Methods.Clear();
 						foreach (var mthd in mthds) {
 							Methods.Add(mthd);
 						}
+						//告知結果
+						MessageBox.Show(
+							$"File loaded",
+							"Load",
+							MessageBoxButton.OK,
+							MessageBoxImage.Information
+						);
+					} else {
+						//告知結果
+						MessageBox.Show(
+							$"Load failed when deserializing",
+							"Load",
+							MessageBoxButton.OK,
+							MessageBoxImage.Information
+						);
 					}
 				}
 			} catch (Exception ex) {
@@ -87,6 +102,13 @@ namespace URScriptMethodBuilder {
 					var jsonStr = JsonConvert.SerializeObject(Methods, Formatting.Indented);
 					//寫入檔案
 					File.WriteAllText(diag.FileName, jsonStr);
+					//告知結果
+					MessageBox.Show(
+						$"File saved",
+						"Save",
+						MessageBoxButton.OK,
+						MessageBoxImage.Information
+					);
 				}
 			} catch (Exception ex) {
 				MessageBox.Show(
@@ -144,6 +166,39 @@ namespace URScriptMethodBuilder {
 							MessageBoxButton.OK,
 							result ? MessageBoxImage.Information : MessageBoxImage.Error
 						);
+					}
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(
+					ex.ToString(),
+					"Exception",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			} finally {
+				RaisePropChg("HasItem");
+			}
+		}
+
+		private void Modify_Clicked(object sender, RoutedEventArgs e) {
+			try {
+				//確保目前有選擇項目
+				if (SelectedMethod != null) {
+					//先進行複製，避免取消還是更動到原始資料
+					var cpMthd = SelectedMethod.Clone();
+					//建立編輯視窗
+					var mthdWind = new MethodWindow(cpMthd);
+					//如果使用者有點下儲存，進行判斷
+					if (mthdWind.ShowDialog() ?? false) {
+						//檢查名稱是否合法
+						if (mthdWind.Method.IsValid) {
+							//先記錄索引位置，等等要放回來
+							var idx = Methods.IndexOf(SelectedMethod);
+							//移除舊的
+							Methods.Remove(SelectedMethod);
+							//插入原先位置
+							Methods.Insert(idx, mthdWind.Method);
+						}
 					}
 				}
 			} catch (Exception ex) {

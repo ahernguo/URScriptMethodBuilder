@@ -118,6 +118,33 @@ namespace URScriptMethodBuilder {
 				);
 			}
 		}
+
+		private void Modify_Clicked(object sender, RoutedEventArgs e) {
+			try {
+				//確保目前有選擇項目
+				if (SelectedParameter != null) {
+					//先進行複製，避免取消還是更動到原始資料
+					var cpPara = SelectedParameter.Clone();
+					//建立編輯視窗
+					var paraWind = new ParameterWindow(cpPara);
+					//如果使用者有點下儲存，進行判斷
+					if (paraWind.ShowDialog() ?? false) {
+						//檢查名稱是否合法
+						if (paraWind.Parameter.IsValid) {
+							//取代之
+							Method.ReplaceParameter(SelectedParameter, paraWind.Parameter);
+						}
+					}
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(
+					ex.ToString(),
+					"Exception",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+		}
 		#endregion
 	}
 }
