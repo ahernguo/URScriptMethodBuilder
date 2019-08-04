@@ -13,13 +13,35 @@ namespace URScriptMethodBuilder {
 	/// <summary>URScript 函數建構器</summary>
 	public partial class MainWindow : MetroWindow, INotifyPropertyChanged {
 
+		#region Fields
+		private bool mSaveEnb;
+		private bool mAutoSaveEnb;
+		private string mAutoFile;
+		#endregion
+
 		#region Properties
 		/// <summary>取得 URScript 函數集合</summary>
 		public WpfObservableCollection<IMethod> Methods { get; }
 		/// <summary>取得或設定當前 <see cref="ListBox"/> 所選取的項目</summary>
 		public IMethod SelectedMethod { get; set; }
-		/// <summary>取得當前是否有函數於 <see cref="Methods"/> 中</summary>
-		public bool HasItem => Methods.Count > 0;
+		/// <summary>取得或設定當前是否有函數於 <see cref="Methods"/> 中</summary>
+		public bool SaveEnabled {
+			get => mSaveEnb;
+			set {
+				mSaveEnb = value;
+				RaisePropChg();
+			}
+		}
+		/// <summary>取得或設定是否啟用自動儲存</summary>
+		public bool AutoSaveEnabled {
+			get => mAutoSaveEnb;
+			set {
+				mAutoSaveEnb = value;
+				if (mAutoSaveEnb) {
+					GetAutoSaveFile();
+				}
+			}
+		}
 		#endregion
 
 		#region Constructor
@@ -39,6 +61,38 @@ namespace URScriptMethodBuilder {
 		/// <param name="name">屬性名稱</param>
 		private void RaisePropChg([CallerMemberName]string name = "") {
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+		}
+		#endregion
+
+		#region Private Methods
+		/// <summary>透過對話視窗詢問使用者要自動儲存的檔案</summary>
+		private void GetAutoSaveFile() {
+			try {
+				//建立 Dialog
+				var diag = new SaveFileDialog() {
+					Filter = "URScipt Methods | *.json"
+				};
+				//如果使用者有成功選擇檔案則儲存之
+				if (diag.ShowDialog() ?? false) {
+					mAutoFile = diag.FileName;
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(
+					ex.ToString(),
+					"Exception",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+		}
+
+		/// <summary>將 <see cref="Methods"/> 序列化至檔案</summary>
+		/// <param name="fileName">欲儲存的檔案名稱</param>
+		private void SaveFile(string fileName) {
+			//序列化成 JSON 字串
+			var jsonStr = JsonConvert.SerializeObject(Methods, Formatting.Indented);
+			//寫入檔案
+			File.WriteAllText(fileName, jsonStr);
 		}
 		#endregion
 
@@ -98,10 +152,8 @@ namespace URScriptMethodBuilder {
 				};
 				//如果使用者有成功選擇檔案則儲存之
 				if (diag.ShowDialog() ?? false) {
-					//序列化成 JSON 字串
-					var jsonStr = JsonConvert.SerializeObject(Methods, Formatting.Indented);
-					//寫入檔案
-					File.WriteAllText(diag.FileName, jsonStr);
+					//儲存檔案
+					SaveFile(diag.FileName);
 					//告知結果
 					MessageBox.Show(
 						$"File saved",
@@ -140,7 +192,12 @@ namespace URScriptMethodBuilder {
 					MessageBoxImage.Error
 				);
 			} finally {
-				RaisePropChg("HasItem");
+				//啟用或禁用 Save 按鈕
+				SaveEnabled = !mAutoSaveEnb && (Methods.Count > 0);
+				//如有自動儲存，儲存之
+				if (mAutoSaveEnb && !string.IsNullOrEmpty(mAutoFile)) {
+					SaveFile(mAutoFile);
+				}
 			}
 		}
 
@@ -176,7 +233,12 @@ namespace URScriptMethodBuilder {
 					MessageBoxImage.Error
 				);
 			} finally {
-				RaisePropChg("HasItem");
+				//啟用或禁用 Save 按鈕
+				SaveEnabled = !mAutoSaveEnb && (Methods.Count > 0);
+				//如有自動儲存，儲存之
+				if (mAutoSaveEnb && !string.IsNullOrEmpty(mAutoFile)) {
+					SaveFile(mAutoFile);
+				}
 			}
 		}
 
@@ -209,7 +271,12 @@ namespace URScriptMethodBuilder {
 					MessageBoxImage.Error
 				);
 			} finally {
-				RaisePropChg("HasItem");
+				//啟用或禁用 Save 按鈕
+				SaveEnabled = !mAutoSaveEnb && (Methods.Count > 0);
+				//如有自動儲存，儲存之
+				if (mAutoSaveEnb && !string.IsNullOrEmpty(mAutoFile)) {
+					SaveFile(mAutoFile);
+				}
 			}
 		}
 		#endregion

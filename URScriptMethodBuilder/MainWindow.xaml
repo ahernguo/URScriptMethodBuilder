@@ -6,7 +6,7 @@
 		xmlns:mahapps.ctrl="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:URScriptMethodBuilder"
         mc:Ignorable="d"
-        Title="URScript Method Builder" Height="425" Width="375" TitleCharacterCasing="Normal"
+        Title="URScript Method Builder" Height="425" Width="420" TitleCharacterCasing="Normal"
 		WindowStartupLocation="CenterScreen">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -16,13 +16,14 @@
 		<Grid Grid.Row="0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="150"/>
 			</Grid.ColumnDefinitions>
 			<StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"
 				Orientation="Horizontal">
 				<Button Content="Load" Width="60" Click="Load_Clicked"/>
 				<Button Content="Save" Width="60" Margin="5,0,0,0" Click="Save_Clicked"
-					IsEnabled="{Binding HasItem}"/>
+					IsEnabled="{Binding SaveEnabled}"/>
+				<CheckBox IsChecked="{Binding AutoSaveEnabled, Mode=TwoWay}" Content="Atuo Save" Margin="5,0,0,0"/>
 			</StackPanel>
 			<StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0"
 				Orientation="Horizontal">
