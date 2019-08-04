@@ -23,7 +23,7 @@
 		<TextBlock Grid.Row="1" Grid.Column="0" Text="Comment" Style="{StaticResource IndentTitle}"/>
 		<TextBox Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource LabelBox}"
 			Text="{Binding Parameter.Label, Mode=TwoWay}"/>
-		<TextBox Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource EditBox}"
+		<TextBox Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource ParaBox}"
 			Text="{Binding Parameter.Comment, Mode=TwoWay}"/>
 		<StackPanel Grid.Row="2" Grid.Column="1" Margin="0,0,5,0" Orientation="Horizontal"
 			VerticalAlignment="Center" HorizontalAlignment="Right">
