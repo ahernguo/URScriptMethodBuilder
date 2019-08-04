@@ -84,9 +84,9 @@ namespace URScriptMethodBuilder {
 
 		#region Properties
 		/// <summary>取得或設定名稱標籤</summary>
-		public string Label { get; set; }
+		public string Label { get; set; } = string.Empty;
 		/// <summary>取得或設定備註的 Markdown 字串</summary>
-		public string Comment { get; set; }
+		public string Comment { get; set; } = string.Empty;
 		/// <summary>取得此參數是否合法</summary>
 		[JsonIgnore]
 		public bool IsValid => !string.IsNullOrEmpty(Label) && !string.IsNullOrEmpty(Comment);
@@ -109,11 +109,11 @@ namespace URScriptMethodBuilder {
 
 		#region Properties
 		/// <summary>取得或設定名稱標籤</summary>
-		public string Label { get; set; }
+		public string Label { get; set; } = string.Empty;
 		/// <summary>取得或設定回傳用的 Markdown 字串</summary>
-		public string Return { get; set; }
+		public string Return { get; set; } = string.Empty;
 		/// <summary>取得或設定已被取代的 Markdown 字串</summary>
-		public string Deprecated { get; set; }
+		public string Deprecated { get; set; } = string.Empty;
 		/// <summary>取得此函數對應的參數集合</summary>
 		[JsonConverter(typeof(UrParametersConverter))]
 		public WpfObservableCollection<IParameter> Parameters { get; }
@@ -131,9 +131,9 @@ namespace URScriptMethodBuilder {
 
 		#region Properties
 		/// <summary>取得或設定函數名稱</summary>
-		public string Name { get; set; }
+		public string Name { get; set; } = string.Empty;
 		/// <summary>取得或設定備註的 Markdown 字串</summary>
-		public string Comment { get; set; }
+		public string Comment { get; set; } = string.Empty;
 		/// <summary>取得此函數名稱是否合法</summary>
 		[JsonIgnore]
 		public bool IsValid => !string.IsNullOrEmpty(Name);
