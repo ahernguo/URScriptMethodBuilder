@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:URScriptMethodBuilder"
         mc:Ignorable="d"
         Title="URScript Method Builder" Height="425" Width="420" TitleCharacterCasing="Normal"
-		WindowStartupLocation="CenterScreen">
+		WindowStartupLocation="CenterScreen" Icon="logo.ico">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="40"/>
