@@ -37,9 +37,9 @@
 		<TextBox Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource ParaBox}"
 			Text="{Binding Method.Comment, Mode=TwoWay}"/>
 		<TextBox Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource EditBox}"
-			Text="{Binding Method.Signature.Return, Mode=TwoWay}"/>
+			Text="{Binding Method.Return, Mode=TwoWay}"/>
 		<TextBox Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" Style="{StaticResource EditBox}"
-			Text="{Binding Method.Signature.Deprecated, Mode=TwoWay}"/>
+			Text="{Binding Method.Deprecated, Mode=TwoWay}"/>
 		<Grid Grid.Row="1" Grid.Column="1" Margin="5,5,5,5">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
@@ -51,7 +51,7 @@
 			</StackPanel>
 			<DataGrid Grid.Column="0" Margin="0,0,2.5,0" Name="dgPara" AutoGenerateColumns="False"
 				BorderBrush="WhiteSmoke" BorderThickness="1" FontSize="14"
-				IsReadOnly="True" ItemsSource="{Binding Method.Signature.Parameters}"
+				IsReadOnly="True" ItemsSource="{Binding Method.Parameters}"
 				SelectionMode="Single" SelectedItem="{Binding SelectedParameter}">
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="Label" Width="150"

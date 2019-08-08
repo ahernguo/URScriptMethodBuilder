@@ -43,8 +43,6 @@ namespace URScriptMethodBuilder {
 
 		#region UI Events
 		private void Save_Clicked(object sender, RoutedEventArgs e) {
-			//更新 Signature.Label
-			Method.UpdateSignature();
 			//設定結果並關閉視窗
 			this.Invoke(
 				() => {
