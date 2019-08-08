@@ -143,6 +143,40 @@ namespace URScriptMethodBuilder {
 				);
 			}
 		}
+
+		private void MoveUp_Clicked(object sender, RoutedEventArgs e) {
+			try {
+				//確保目前有選擇項目
+				if (SelectedParameter != null) {
+					//將之往上移動
+					Method.ParameterMoveUp(SelectedParameter);
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(
+					ex.ToString(),
+					"Exception",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+		}
+
+		private void MoveDown_Clicked(object sender, RoutedEventArgs e) {
+			try {
+				//確保目前有選擇項目
+				if (SelectedParameter != null) {
+					//將之往下移動
+					Method.ParameterMoveDown(SelectedParameter);
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(
+					ex.ToString(),
+					"Exception",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+		}
 		#endregion
 	}
 }

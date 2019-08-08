@@ -52,6 +52,12 @@ namespace URScriptMethodBuilder {
 		/// <summary>從集合中移除 <see cref="IParameter"/> </summary>
 		/// <param name="parameter">欲移除的 <see cref="IParameter"/></param>
 		bool RemoveParameter(IParameter parameter);
+		/// <summary>將 <see cref="IParameter"/> 索引位置往上移動一格</summary>
+		/// <param name="parameter">欲移動的參數</param>
+		void ParameterMoveUp(IParameter parameter);
+		/// <summary>將 <see cref="IParameter"/> 索引位置往下移動一格</summary>
+		/// <param name="parameter">欲移動的參數</param>
+		void ParameterMoveDown(IParameter parameter);
 		/// <summary>取得此 <see cref="IMethod"/> 的複製品</summary>
 		/// <returns>複製品</returns>
 		IMethod Clone();
@@ -133,6 +139,28 @@ namespace URScriptMethodBuilder {
 		/// <param name="parameter">欲移除的 <see cref="IParameter"/></param>
 		public bool RemoveParameter(IParameter parameter) {
 			return Parameters.Remove(parameter);
+		}
+
+		/// <summary>將 <see cref="IParameter"/> 索引位置往上移動一格</summary>
+		/// <param name="parameter">欲移動的參數</param>
+		public void ParameterMoveUp(IParameter parameter) {
+			var idx = Parameters.IndexOf(parameter);
+			if (idx > 0) {
+				if (Parameters.Remove(parameter)) {
+					Parameters.Insert(idx - 1, parameter);
+				}
+			}
+		}
+
+		/// <summary>將 <see cref="IParameter"/> 索引位置往下移動一格</summary>
+		/// <param name="parameter">欲移動的參數</param>
+		public void ParameterMoveDown(IParameter parameter) {
+			if (Parameters.Count > 1) {
+				var idx = Parameters.IndexOf(parameter);
+				if (Parameters.Remove(parameter)) {
+					Parameters.Insert(idx + 1, parameter);
+				}
+			}
 		}
 
 		/// <summary>取得此 <see cref="IMethod"/> 的複製品</summary>
